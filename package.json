@@ -1,6 +1,6 @@
 {
-  "name": "coloredlogging",
-  "version": "1.0.0",
+  "name": "@asynico/coloredlogging",
+  "version": "1.2.0",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,5 +22,12 @@
   ],
   "author": "asynico",
   "license": "ISC",
-  "description": "A simple and lightweight logging library that adds colorful output to console messages, making development debugging easier and more visually appealing."
+  "description": "A simple and lightweight logging library that adds colorful output to console messages, making development debugging easier and more visually appealing.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asynico/coloredlogging.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }
