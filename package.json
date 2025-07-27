@@ -1,0 +1,26 @@
+{
+  "name": "coloredlogging",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node test.js"
+  },
+  "keywords": [
+    "logging",
+    "colored",
+    "console",
+    "terminal",
+    "colors",
+    "logger",
+    "debug",
+    "output",
+    "colorful",
+    "formatting",
+    "cli",
+    "ansi"
+  ],
+  "author": "asynico",
+  "license": "ISC",
+  "description": "A simple and lightweight logging library that adds colorful output to console messages, making development debugging easier and more visually appealing."
+}

@@ -1,0 +1,6 @@
+module.exports = {
+  info: '#0000FF',
+  success: '#008000',
+  warn: '#FFFF00',
+  error: '#FF0000',
+};
