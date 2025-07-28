@@ -1,5 +1,3 @@
-```
-
 ## Custom Logger Creation# Colored Logging
 
 [![npm version](https://badge.fury.io/js/@asynico%2Fcoloredlogging.svg)](https://badge.fury.io/js/@bobandbobb%colorlogs)
