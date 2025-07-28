@@ -1,16 +1,19 @@
-# Colored Logging
+```
 
-[![npm version](https://badge.fury.io/js/@asynico%2Fcoloredlogging.svg)](https://badge.fury.io/js/@asynico%2Fcoloredlogging)
+## Custom Logger Creation# Colored Logging
 
-A simple, customizable Node.js module to add color and language-specific formatting to your console logs.
+[![npm version](https://badge.fury.io/js/@asynico%2Fcoloredlogging.svg)](https://badge.fury.io/js/@bobandbobb%colorlogs)
+
+A simple, customizable Node.js/TypeScript module to add color and language-specific formatting to your console logs.
 
 ## Features
 
 - 🎨 Colorful console output with customizable themes
-- 🌐 Language-specific formatters (Python, Rust, C#, Discord.js, Kotlin, PHP, Ruby, Swift)
 - ⚙️ Fully customizable loggers with your own themes and formatters
 - 📝 Multiple log levels for different use cases
 - ⏰ Automatic timestamp formatting
+- 🔧 Full TypeScript support with type definitions
+- 🎯 Lightweight and flexible API
 
 ## Installation
 
@@ -23,7 +26,7 @@ npm install @asynico/coloredlogging
 ### Default Logger
 
 ```javascript
-const logger = require('@asynico/coloredlogging');
+const logger = require('@bobandbob/colorlogs');
 
 logger.info('This is an informational message.');
 logger.success('This is a success message.');
@@ -31,158 +34,222 @@ logger.warn('This is a warning message.');
 logger.error('This is an error message.');
 ```
 
-## Language-Specific Formatters
+### ES6/TypeScript Import
 
-Choose from pre-configured formatters that match popular programming languages and frameworks:
+```typescript
+import { createLogger } from '@bobandbob/colorlogs';
 
-### Python Style
-```javascript
-const logger = require('@asynico/coloredlogging');
+// Create a logger with default settings
+const logger = createLogger();
 
-logger.python.info('This is a Python-style info message.');
-logger.python.warn('This is a Python-style warn message.');
+logger.info('This is an informational message.');
+logger.success('This is a success message.');
+logger.warn('This is a warning message.');
+logger.error('This is an error message.');
 ```
 
-### Rust Style
-```javascript
-const logger = require('@asynico/coloredlogging');
+### Custom Theme
 
-logger.rust.info('This is a Rust-style info message.');
-logger.rust.error('This is a Rust-style error message.');
-```
-
-### C# Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.csharp.trace('Trace message with timestamp');
-logger.csharp.debug('Debug information');
-logger.csharp.info('General information');
-logger.csharp.warn('Warning message');
-logger.csharp.error('Error occurred');
-logger.csharp.critical('Critical system error');
-```
-
-### Discord.js Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.discord.debug('Discord gateway debug info');
-logger.discord.info('Discord client information');
-logger.discord.warning('Discord gateway warning');
-logger.discord.error('Discord client error');
-logger.discord.critical('Critical Discord gateway error');
-```
-
-### Kotlin Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.kotlin.verbose('Verbose logging information');
-logger.kotlin.debug('Debug information');
-logger.kotlin.info('General information');
-logger.kotlin.warn('Warning message');
-logger.kotlin.error('Error message');
-logger.kotlin.assert('Assertion failed');
-```
-
-### PHP Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.php.emergency('System is unusable');
-logger.php.alert('Action must be taken immediately');
-logger.php.critical('Critical conditions');
-logger.php.error('Error conditions');
-logger.php.warning('Warning conditions');
-logger.php.notice('Normal but significant condition');
-logger.php.info('Informational messages');
-logger.php.debug('Debug-level messages');
-```
-
-### Ruby Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.ruby.debug('Debug information');
-logger.ruby.info('General information');
-logger.ruby.warn('Warning message');
-logger.ruby.error('Error message');
-logger.ruby.fatal('Fatal error');
-```
-
-### Swift Style
-```javascript
-const logger = require('@asynico/coloredlogging');
-
-logger.swift.trace('🔍 Detailed trace information');
-logger.swift.debug('🐛 Debug information');
-logger.swift.info('ℹ️ General information');
-logger.swift.notice('📝 Notable events');
-logger.swift.warning('⚠️ Warning conditions');
-logger.swift.error('❌ Error conditions');
-logger.swift.critical('🚨 Critical system errors');
-```
-
-## Custom Logger
-
-Create your own logger with custom colors and formatting:
+Create a logger with custom colors:
 
 ```javascript
-const { createLogger } = require('@asynico/coloredlogging');
+import { createLogger } from '@bobandbob/colorlogs';
 
-// Define your color theme
-const myTheme = {
-  info: '#8A2BE2',           // BlueViolet
-  success: 'rgb(60, 179, 113)',  // MediumSeaGreen
-  warn: '#FFD700',           // Gold
-  error: 'rgb(255, 69, 0)',  // OrangeRed
+const customTheme = {
+  info: '#0066CC',          
+  success: '#00AA00',       
+  warn: '#FF8800',         
+  error: '#CC0000',      
 };
 
-// Define your custom formatter
-const myFormatter = {
-  info: (message) => `[MY INFO] ${message}`,
-  success: (message) => `[MY SUCCESS] ${message}`,
-  warn: (message) => `[MY WARN] ${message}`,
-  error: (message) => `[MY ERROR] ${message}`,
+const logger = createLogger({ theme: customTheme });
+
+logger.info('Custom colored info message');
+logger.success('Custom colored success message');
+```
+
+### Custom Log Format
+
+Customize how your logs are formatted:
+
+```javascript
+import { createLogger } from '@bobandbob/colorlogs';
+
+const customLogFormat = ({ level, message, color, timestamp }) => {
+  return `${color}🚀 [${level.padEnd(7)}] ${timestamp ? `${timestamp} - ` : ''}${message}\x1b[0m`;
 };
 
-// Create the custom logger
-const customLogger = createLogger({ theme: myTheme, formatter: myFormatter });
+const logger = createLogger({ 
+  logFormat: customLogFormat,
+  showTimestamp: true
+});
 
-// Use your custom logger
-customLogger.info('This is a custom info message.');
-customLogger.success('Operation completed successfully!');
-customLogger.warn('This is a warning with custom styling.');
-customLogger.error('An error occurred with custom formatting.');
+logger.info('This message uses custom formatting');
+```
+
+### Custom Log Levels
+
+Define your own log levels:
+
+```javascript
+import { createLogger } from '@bobandbob/colorlogs';
+
+const theme = {
+  debug: '#888888',
+  info: '#0066CC',
+  success: '#00AA00',
+  warn: '#FF8800',
+  error: '#CC0000',
+  critical: '#FF0066'
+};
+
+const logger = createLogger({ 
+  theme,
+  levels: ['debug', 'info', 'success', 'warn', 'error', 'critical']
+});
+
+logger.debug('Debug information');
+logger.critical('Critical system error');
+```
+
+### Disable Timestamps
+
+```javascript
+import { createLogger } from @bobandbob/colorlogs';
+
+const logger = createLogger({ showTimestamp: false });
+
+logger.info('This message has no timestamp');
 ```
 
 ## API Reference
 
-### Default Logger Methods
-- `logger.info(message)` - Logs an informational message
-- `logger.success(message)` - Logs a success message
-- `logger.warn(message)` - Logs a warning message
-- `logger.error(message)` - Logs an error message
+### `createLogger(options?: LoggerOptions)`
 
-### Language-Specific Loggers
-- `logger.python` - Python-style formatting
-- `logger.rust` - Rust-style formatting
-- `logger.csharp` - C#/.NET style formatting with full timestamp
-- `logger.discord` - Discord.js style formatting
-- `logger.kotlin` - Android/Kotlin style formatting
-- `logger.php` - PHP PSR-3 compliant log levels
-- `logger.ruby` - Ruby on Rails style formatting
-- `logger.swift` - Swift style with emoji indicators
+Creates a new logger instance with the specified options.
 
-### Custom Logger Creation
-- `createLogger({ theme, formatter })` - Creates a new logger instance with custom theme and formatter
+#### Options
 
-### Color Theme Format
-Colors can be specified in multiple formats:
-- Hex: `#FF0000`
-- RGB: `rgb(255, 0, 0)`
-- Color names: `red`, `blue`, `green`
+- `theme?: LoggerTheme` - Color theme for different log levels
+- `logFormat?: Function` - Custom formatting function for log output
+- `showTimestamp?: boolean` - Whether to include timestamps (default: `true`)
+- `levels?: LogLevel[]` - Array of log levels to create methods for (default: `['info', 'success', 'warn', 'error']`)
+
+#### Default Theme
+
+```javascript
+{
+  info: '#0000FF',     
+  success: '#008000',   
+  warn: '#FFFF00',      
+  error: '#FF0000'    
+}
+```
+
+### Types
+
+#### `LogLevel`
+```typescript
+type LogLevel = 'info' | 'success' | 'warn' | 'error';
+```
+
+#### `LoggerTheme`
+```typescript
+interface LoggerTheme {
+  info: string;
+  success: string;
+  warn: string;
+  error: string;
+  [key: string]: string; // Allows custom log levels
+}
+```
+
+#### `LoggerOptions`
+```typescript
+interface LoggerOptions {
+  theme?: LoggerTheme;
+  logFormat?: (opts: {
+    level: LogLevel;
+    message: string;
+    color: string;
+    timestamp: string;
+  }) => string;
+  showTimestamp?: boolean;
+  levels?: LogLevel[];
+}
+```
+
+### Utilities
+
+#### `toAnsi(color: string): string`
+
+Converts hex colors to ANSI escape codes for terminal output.
+
+```javascript
+import { toAnsi } from '@bobandbob/colorlogs';
+
+console.log(`${toAnsi('#FF0000')}This text is red\x1b[0m`);
+```
+
+#### `defaultTheme`
+
+The default color theme object.
+
+```javascript
+import { defaultTheme } from '@bobandbob/colorlogs';
+
+console.log(defaultTheme); // { info: '#0000FF', success: '#008000', ... }
+```
+
+## Color Formats
+
+Colors can be specified as hex values:
+- `#FF0000` (red)
+- `#00FF00` (green)
+- `#0000FF` (blue)
+
+## Examples
+
+### Simple Logger
+```javascript
+import { createLogger } from '@bobandbob/colorlogs';
+
+const logger = createLogger();
+logger.info('Application started');
+logger.success('Database connected');
+logger.warn('Deprecated API used');
+logger.error('Connection failed');
+```
+
+### Advanced Logger
+```javascript
+import { createLogger } from '@bobandbob/colorlogs';
+
+const advancedLogger = createLogger({
+  theme: {
+    trace: '#666666',
+    debug: '#888888',
+    info: '#0066CC',
+    success: '#00AA00',
+    warn: '#FF8800',
+    error: '#CC0000',
+    fatal: '#FF0066'
+  },
+  levels: ['trace', 'debug', 'info', 'success', 'warn', 'error', 'fatal'],
+  logFormat: ({ level, message, color, timestamp }) => 
+    `${color}[${timestamp}] ${level.toUpperCase().padEnd(7)} | ${message}\x1b[0m`,
+  showTimestamp: true
+});
+
+advancedLogger.trace('Entering function');
+advancedLogger.debug('Variable state: active');
+advancedLogger.info('Process completed');
+advancedLogger.fatal('System shutdown required');
+```
+
+## TypeScript Support
+
+This package includes full TypeScript definitions and is written in TypeScript. You get complete type safety and IntelliSense support out of the box.
 
 ## Contributing
 
@@ -194,7 +261,8 @@ This project is licensed under the MIT License.
 
 ## Changelog
 
-- **Latest**: Added support for Swift, PHP, Kotlin, Discord.js, and C# formatting styles
-- Added emoji indicators for Swift logger
-- Improved timestamp formatting across different language styles
-- Enhanced documentation with comprehensive examples
+- **Latest**: Complete TypeScript rewrite with improved API
+- Simplified API focused on core functionality
+- Full TypeScript support with type definitions
+- Customizable log levels and formatting
+- Lightweight implementation with no dependencies
